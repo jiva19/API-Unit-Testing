@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "api/Band",
+      "applicationUrl": "http://localhost:5187",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "BandDatabase": "Host=localhost;Database=postgres;Username=postgres;Password=mysecretpassword",
+        "CONNECTION_STRING_DB":"Host=localhost;Database=postgres;Username=postgres;Password=mysecretpassword"
+      }
+    }
+  }
+}

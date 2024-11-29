@@ -1,0 +1,6 @@
+﻿services:
+  learningproject2:
+    image: learningproject2
+    build:
+      context: .
+      dockerfile: LearningProject2/Dockerfile
