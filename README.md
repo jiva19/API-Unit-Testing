@@ -1,32 +1,31 @@
 # 🎸 Band Management API: Clean Architecture & Unit Testing
 
-## **Overview**
-This project is a high-quality **ASP.NET Core Web API** designed to demonstrate the implementation of **Clean Architecture** and the **Repository Pattern** in C#. The goal was to create a system that is easy to scale, maintain, and—most importantly—test in isolation.
+## **🎯 Project Objective**
+The primary goal of this project was to move beyond basic CRUD and deeply understand the practical implementation of **Dependency Injection (DI)**. I built this to explore:
+* **Decoupling:** How using **Interfaces** (`IBandService`, `IBandRepository`) allows the Controller to remain "blind" to the underlying database logic.
+* **Testability with Mocks:** How DI enables the use of **Moq** to isolate the Controller during Unit Testing, ensuring that tests are fast and independent of the data layer.
+* **Clean Architecture:** Gaining a hands-on grasp of how a 3-layer structure (Web, Business, Infrastructure) prevents code from becoming a "Big Ball of Mud."
 
 ---
 
 ## **🏗️ Architectural Layers**
 
 ### **1. Web API Layer (Controllers)**
-The `BandController` serves as the entry point. It uses **Primary Constructors** to inject the `IBandService`, ensuring the controller only handles request routing and HTTP status code responses (Ok, NotFound, BadRequest).
+The `BandController` serves as the entry point. It uses **Primary Constructors** to inject the `IBandService`. This layer is strictly responsible for request routing and returning appropriate HTTP status codes.
 
 ### **2. Business Logic Layer (Services)**
-The `BandService` acts as the "brain" of the application. It sits between the Controller and the Data Access layer, ensuring that business rules are applied before any data is persisted.
+The `BandService` acts as the intermediary. By implementing `IBandService`, it ensures that business rules are applied before data reaches the repository, keeping the logic centralized and reusable.
 
 ### **3. Data Access Layer (Repositories)**
-The `BandRepository` handles all communication with the **SQL Server** database via **Entity Framework Core**. By using the Repository Pattern, the rest of the application remains unaware of the specific database technology used.
-
-### **4. Abstraction Layer (Interfaces)**
-Interfaces like `IBandService` and `IBandRepository` decouple the components, allowing for seamless **Dependency Injection** and making the system highly modular.
+The `BandRepository` handles all communication with the database via **Entity Framework Core**. This demonstrates the **Repository Pattern**, where the data access logic is completely abstracted away from the rest of the application.
 
 ---
 
 ## **🧪 Testing Strategy**
-The project features a robust **Unit Testing** project (`LearningProject2Testing`) that achieves high code coverage using:
+To validate the benefits of Dependency Injection, I built a robust **Unit Testing** suite:
 
-* **NUnit:** The primary testing framework.
-* **Moq:** Used to create mock objects of the Service layer. This allows the tests to verify the Controller's logic without needing a live database or running the actual service code.
-* **Edge Case Validation:** Tests cover positive paths (returning lists), negative paths (NotFound responses), and exception handling (validating that specific error messages are returned to the user).
+* **NUnit & Moq:** I used **Moq** to create "fake" versions of the Service layer. This allowed me to test if the Controller correctly handles different scenarios (like a `404 Not Found` when a list is empty) without ever needing a real database.
+* **Behavior Validation:** Tests cover positive paths, empty results, and **Custom Exception Handling** (verifying that `ArgumentException` triggers a `400 BadRequest`).
 
 ---
 
@@ -42,7 +41,6 @@ The project features a robust **Unit Testing** project (`LearningProject2Testing
 ---
 
 ## **🏆 Key Learning Outcomes**
-* Implementing **Dependency Injection** to increase code flexibility.
-* Mastering **Mocking** with Moq to isolate components during testing.
-* Building a **Layered Architecture** where each class has a Single Responsibility (SRP).
-* Handling **Custom Exceptions** to provide clear, meaningful API feedback.
+* **Interfaces as Contracts:** Understood how coding to an interface makes the system modular.
+* **Mocking Mastery:** Learned how to setup `ReturnsAsync` and `ThrowsAsync` in Moq to simulate complex backend behaviors.
+* **Separation of Concerns:** Achieved a practical understanding of keeping "Web" logic and "Data" logic in their own boxes.
